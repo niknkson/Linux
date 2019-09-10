@@ -1,0 +1,303 @@
+git config --global user.name "Root user"
+git config --global user.email "root@localhost"
+cat .gitconfig
+ls -la
+cat .gitconfig
+git config --list
+======================================================================
+git config --system system.name "Git Repo Server 1"
+cat /etc/gitconfig
+[system]
+        name = Git Repo Server 1
+=======================================================================
+git config --global system.name "My Git Repo Server 1"
+cat .gitconfig
+git config --global core.editor vim
+========================================================================
+cat .gitconfig
+[user]
+        name = Root user
+        email = root@localhost
+[system]
+        name = My Git Repo Server 1
+[core]
+        editor = vim
+        pager = more
+        excludesfile = /root/.gitignore_global
+
+=========================================================================
+git config --global core.pager 'more'
+=========================================================================
+cat .gitconfig
+# git config --list
+system.name=Git Repo Server 1
+user.name=Root user
+user.email=root@localhost
+system.name=My Git Repo Server 1
+core.editor=vim
+core.pager=more
+core.excludesfile=/root/.gitignore_global
+
+====================================================================
+# vim .gitignore_global
+*~
+.DS_Store
+=====================================================================
+
+git config --global core.excludesfile ~/.gitignore_global
+git config --list
+cat .gitconfig
+mkdir gittest
+cd gittest/
+git init
+ls -la
+cd .git/
+ll
+cd ..
+ll
+echo "this is my first file" > test.txt
+git status
+git add test.txt
+git status
+git commit
+git status
+cd ..
+mkdir mydir
+cd mydir
+cp /etc/h* .
+ls -la
+git init
+git status
+git add *
+git status
+git commit -m "my new dur"
+git status
+=================CLONING=====================
+mkdir repos
+cd repos/
+----------------
+git clone ~/mydir/ clonedrepo
+Cloning into 'clonedrepo'...
+done.
+-------------------
+cd clonedrepo
+echo "this is a text file"> testfile.txt
+git add testfile.txt
+git commit -m "first cloned commit"
+-------------------------------------------
+git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+-----------------
+cd mydir
+----------------------------
+git pull ../repos/clonedrepo/
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From ../repos/clonedrepo
+ * branch            HEAD       -> FETCH_HEAD
+Updating c3c167a..1ab1c14
+Fast-forward
+ testfile.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 testfile.txt
+--------------------------------------------
+cd ../repos/clonedrepo/
+git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+-------------------------
+git push
+Everything up-to-date
+------------------------
+git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+----------------------
+=======================Tags==========================================
+cd mydir
+git branch -v
+* master 1ab1c14 first cloned commit
+-----------------------------------------------
+git tag tag1
+git branch -v
+* master 1ab1c14 first cloned commit
+---------------------------------------------
+
+git tag
+tag1
+-----------------------------------------------
+echo "tag1 post" > posttag.txt
+git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        posttag.txt
+
+nothing added to commit but untracked files present (use "git add"                                                                                                       to track)
+
+git add posttag.txt
+git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   posttag.txt
+
+
+git commit -m "post tag1 commit"
+
+[master 7daf2ba] post tag1 commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 posttag.txt
+------------------------------------------------------
+git status
+On branch master
+nothing to commit, working tree clean
+----------------------------------------------------
+git branch -v
+* master 7daf2ba post tag1 commit
+------------------------------------------------
+git show
+commit 7daf2babcb098e0b13f6e71446f52c4341ff891e (
+HEAD -> master)
+Author: Root user <root@localhost>
+Date:   Sun May 19 04:26:35 2019 +0000
+
+    post tag1 commit
+
+diff --git a/posttag.txt b/posttag.txt
+new file mode 100644
+index 0000000..74cb499
+--- /dev/null
++++ b/posttag.txt
+@@ -0,0 +1 @@
++tag1 post
+-----------------------------------------------------------
+git show tag1
+commit 1ab1c14f0f1970f28bd61a0dc326aead1d3c990f (
+tag: tag1)
+Author: Root user <root@localhost>
+Date:   Sun May 19 03:21:49 2019 +0000
+
+    first cloned commit
+
+diff --git a/testfile.txt b/testfile.txt
+new file mode 100644
+index 0000000..e9ea42a
+--- /dev/null
++++ b/testfile.txt
+@@ -0,0 +1 @@
++this is a text file
+-----------------------------------------------------------
+[root@ip-172-31-31-214 mydir]# ll
+total 44
+-rw-r--r-- 1 root root 1591 May 19 02:57 hibagent-config.cfg
+-rw-r--r-- 1 root root  721 May 19 02:57 hibinit-config.cfg
+-rw-r--r-- 1 root root    9 May 19 02:57 host.conf
+-rw-r--r-- 1 root root   45 May 19 02:57 hostname
+-rw-r--r-- 1 root root  126 May 19 02:57 hosts
+-rw-r--r-- 1 root root  370 May 19 02:57 hosts.allow
+-rw-r--r-- 1 root root  460 May 19 02:57 hosts.deny
+-rw-r--r-- 1 root root   10 May 19 04:25 posttag.txt
+-rw-r--r-- 1 root root   22 May 19 03:02 test.csv
+-rw-r--r-- 1 root root   20 May 19 03:35 testfile.txt
+-rw-r--r-- 1 root root   22 May 19 03:02 test.mf
+
+git describe --tags
+tag1-1-g7daf2ba
+git tag -a v1 -m "Version 1.0 Relea                                                                                                      se"
+git describe --tags                                                                                                                     v1
+git tag
+tag1
+v1
+----------------------------------------
+echo "tag2" > posttag2.txt
+git add posttag2.txt
+git commit -m "posttag2"
+[master 87cc622] posttag2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 posttag2.txt
+----------------------------------------------
+git show v1
+tag v1
+Tagger: Root user <root@localhost>
+Date:   Sun May 19 04:33:14 2019 +0000
+
+Version 1.0 Release
+
+commit 7daf2babcb098e0b13f6e71446f52c4341ff891e (
+tag: v1)
+Author: Root user <root@localhost>
+Date:   Sun May 19 04:26:35 2019 +0000
+
+    post tag1 commit
+
+diff --git a/posttag.txt b/posttag.txt
+new file mode 100644
+index 0000000..74cb499
+--- /dev/null
++++ b/posttag.txt
+@@ -0,0 +1 @@
++tag1 post
+---------------------------
+git branch -v
+* master 87cc622 posttag2
+------------------------------
+git describe --tags
+v1-1-g87cc622
+
+=======================BRANCHES======================
+cd mydir
+git status
+On branch master
+nothing to commit, working tree clean
+---------------------------------------
+git checkout -b development
+Switched to a new branch 'development'
+------------------------------------------
+git status
+On branch development
+nothing to commit, working tree clean
+------------------------------------------------------------
+git branch -a
+* development
+  master
+=========================Merging=========================
+
+[root@ip-172-31-31-214 mydir]# git branch -a
+  development
+* master
+git status
+On branch master
+nothing to commit, working tree clean
+-----------------
+git merge development --no-ff  <------------------------------ Merging development branch into master branch into same repository "mydir"
+
+================================Logging==================
+ git log
+ git log -p -2
+ git log --stat
+ git log --pretty=oneline
+ git log --pretty=format:"%h: %an, %cn, %cd, - %s"
+ git log --pretty=format:"%h: %an, %cn, %cd, - %s"  --graph
+ git branch -a
+ git checkout master
+ git log --pretty=format:"%h: %an, %cn, %cd, - %s"  --graph
+ 
+====================
+FAQ
+Q1: Remove files from git not from hard drive.
+Ans: [ec2-user@ip-172-31-26-91 gittest]$ git rm --cached README
+rm 'README'
+
+
